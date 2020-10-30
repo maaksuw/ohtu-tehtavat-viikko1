@@ -1,1 +1,1 @@
-tämä on kolmas dokumentti, ja on kansion sisällä.
+Tämä on kolmas dokumentti ja on ensimmäisen kansion sisällä.
