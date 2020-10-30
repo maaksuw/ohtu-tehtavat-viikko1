@@ -14,12 +14,12 @@ dependencies {
 }
 
 application {
-    mainClass = 'ohtu.ohtuvarasto.Main'
+    mainClass = 'paaohjelma.Main'
 }
 
 jar {
     manifest {
-        attributes 'Main-Class': 'ohtu.ohtuvarasto.Main'
+        attributes 'Main-Class': 'paaohjelma.Main'
     }
 }
 
@@ -27,5 +27,10 @@ jacocoTestReport {
     reports {
         xml.enabled true
         html.enabled true
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: ['paaohjelma/**'])
+        }))
     }
 }
