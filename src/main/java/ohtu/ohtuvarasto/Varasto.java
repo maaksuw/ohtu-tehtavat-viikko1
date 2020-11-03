@@ -10,28 +10,18 @@ public class Varasto {
     public Varasto(double tilavuus) {  // tilavuus on annettava
         if (tilavuus > 0.0) {
             this.tilavuus = tilavuus;
-        } else // virheellinen, nollataan
-        {
+        } else {
             this.tilavuus = 0.0;  // => käyttökelvoton varasto
         }
         saldo = 0;     // oletus: varasto on tyhjä
     }
 
     public Varasto(double tilavuus, double alkuSaldo) { // kuormitetaan
-        if (tilavuus > 0.0) {
-            this.tilavuus = tilavuus;
-        } else // virheellinen, nollataan
-        {
-            this.tilavuus = 0.0;  // => käyttökelvoton varasto
-        }
-        if (alkuSaldo < 0.0) {
-            this.saldo = 0.0;
-        } else if (alkuSaldo <= tilavuus) // mahtuu
-        {
-            this.saldo = alkuSaldo;
-        } else {
-            this.saldo = tilavuus;  // täyteen ja ylimäärä hukkaan!
-        }
+        if(tilavuus < 0.0) tilavuus = 0.0; 
+        if(alkuSaldo < 0.0) alkuSaldo = 0.0;
+
+        this.tilavuus = tilavuus;
+        this.saldo = Math.min(alkuSaldo, tilavuus);
     }
 
     // --- ottavat aksessorit eli getterit: ---
@@ -49,12 +39,10 @@ public class Varasto {
 
     // --- asettavat aksessorit eli setterit: ---
     public void lisaaVarastoon(double maara) {
-        if (maara < 0) // virhetilanteessa voidaan tehdä 
-        {
+        if (maara < 0) {
             return;       // tällainen pikapoistuminenkin!
         }
-        if (maara <= paljonkoMahtuu()) // omia aksessoreita voi kutsua
-        {
+        if (maara <= paljonkoMahtuu()) {
             saldo = saldo + maara;          // ihan suoraan sellaisinaan
         } else {
             saldo = tilavuus;  // täyteen ja ylimäärä hukkaan!
@@ -62,8 +50,7 @@ public class Varasto {
     }
 
     public double otaVarastosta(double maara) {
-        if (maara < 0) // virhetilanteessa voidaan tehdä 
-        {
+        if (maara < 0) {
             return 0.0;   // tällainen pikapoistuminenkin!
         }
         if (maara > saldo) {          // annetaan mitä voidaan
